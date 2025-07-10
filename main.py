@@ -67,5 +67,6 @@ while True:
                     except Exception as e:
                         print(f"Error linking {f}: {e}")
 
+    os.system(f"du -sh -L \"{SYMLINK_DIR}\"")
     print("sleep", UPDATE_INTERVAL, "seconds")
     time.sleep(UPDATE_INTERVAL)
