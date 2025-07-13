@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 # Env Required:
-# - SSHFS_URI: SSHFS uses this as the remote location to mount.
-# - SYNC_NAME: Directory name for the sync files on the destination
-# - GOCRYPTFS_PASSWORD: The gocryptfs password
-# - SSHFS_HOSTKEY: Use `ssh-keyscan -p 23 xxx.your-storagebox.de` to get this
-# - SSHFS_KEY: The ssh private key file content
+# - SSHFS_URI: SSHFS uses this as the remote location to mount. Example "u123@u123.your-storagebox.de:/home"
+# - SYNC_NAME: Directory name for the sync files on the destination. Example "Videos"
+# - GOCRYPTFS_PASSWORD: The gocryptfs password.
+# - SSHFS_HOSTKEY: Use `ssh-keyscan -p 23 xxx.your-storagebox.de` to get this. Example "[u123.your-storagebox.de]:23 ssh-rsa AAAAB"
+# - SSHFS_KEY: The ssh private key file content. Example "-----BEGIN OPENSSH PRIVATE KEY-----\nabc\n-----END OPENSSH PRIVATE KEY-----"
 set -e
 
 CRYPTFS_MOUNT="/mnt/gocryptfs"
