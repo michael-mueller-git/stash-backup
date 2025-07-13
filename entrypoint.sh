@@ -32,6 +32,9 @@ trap cleanup EXIT
 
 sshfs \
     -o allow_other \
+    -o reconnect \
+    -o ServerAliveInterval=30 \
+    -o ServerAliveCountMax=3 \
     -o IdentityFile="$SSH_KEY_FILE" \
     -o UserKnownHostsFile="$KNOWN_HOSTS_FILE" \
     -o StrictHostKeyChecking=yes \
