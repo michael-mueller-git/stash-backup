@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 # Env Required:
 # - SSHFS_URI: SSHFS uses this as the remote location to mount.
+# - SYNC_NAME: Directory name for the sync files on the destination
 # - GOCRYPTFS_PASSWORD: The gocryptfs password
 # - SSHFS_HOSTKEY: Use `ssh-keyscan -p 23 xxx.your-storagebox.de` to get this
 # - SSHFS_KEY: The ssh private key file content
@@ -8,7 +9,7 @@ set -e
 
 CRYPTFS_MOUNT="/mnt/gocryptfs"
 SSHFS_MOUNT="/mnt/sshfs"
-ENCRYPTED_DIR="$SSHFS_MOUNT/encrypted"
+ENCRYPTED_DIR="$SSHFS_MOUNT/sync/$SYNC_NAME/encrypted"
 
 mkdir -p "$CRYPTFS_MOUNT" "$SSHFS_MOUNT"
 
