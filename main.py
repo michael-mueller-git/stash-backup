@@ -2,6 +2,7 @@ import requests
 import os
 import sys
 import time
+import argparse
 
 def get_str_env(key: str) -> str:
     value = os.getenv(key)
@@ -24,6 +25,10 @@ GRAPHQL_URL = get_str_env("STASH_URL")
 SYMLINK_DIR = get_str_env("SYMLINK_PATH")
 SRC_DIR = get_str_env("SRC_PATH")
 UPDATE_INTERVAL = get_optional_int_env("UPDATE_INTERVAL", 24*3600)
+
+parser = argparse.ArgumentParser(description="Stash Backup Helper")
+parser.add_argument('--sync', default=None, help='Sync destination')
+args = parser.parse_args()
 
 os.makedirs(SYMLINK_DIR , exist_ok=True)
 
@@ -68,5 +73,9 @@ while True:
                         print(f"Error linking {f}: {e}")
 
     os.system(f"du -sh -L \"{SYMLINK_DIR}\"")
+
+    if args.sync:
+        os.system(f"rsync -avL --size-only --stats --delete \"{SYMLINK_DIR}/\" \"{args.sync}/\"")
+
     print("sleep", UPDATE_INTERVAL, "seconds")
     time.sleep(UPDATE_INTERVAL)
