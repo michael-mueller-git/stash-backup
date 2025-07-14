@@ -35,7 +35,7 @@ fi
 
 CRYPTFS_MOUNT="/mnt/gocryptfs"
 SSHFS_MOUNT="/mnt/sshfs"
-ENCRYPTED_DIR="$SSHFS_MOUNT/sync/$SYNC_NAME/encrypted"
+ENCRYPTED_DIR="$SSHFS_MOUNT/sync/$SYNC_NAME"
 
 mkdir -p "$CRYPTFS_MOUNT" "$SSHFS_MOUNT"
 
