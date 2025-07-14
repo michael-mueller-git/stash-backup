@@ -1,6 +1,6 @@
 # stash-linker
 
-Simple container that creates symlinks to high rated video files.
+Simple container that backups/syncs high rated video files from stashapp.
 
 ## Limitation
 
