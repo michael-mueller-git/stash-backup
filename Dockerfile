@@ -8,7 +8,8 @@ RUN apk add --no-cache \
     fuse \
     python3 \
     py3-pip \
-    py3-virtualenv
+    py3-virtualenv \
+    ncdu
 
 COPY requirements.txt .
 
