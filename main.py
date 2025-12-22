@@ -25,6 +25,7 @@ GRAPHQL_URL = get_str_env("STASH_URL")
 SYMLINK_DIR = get_str_env("SYMLINK_PATH")
 SRC_DIR = get_str_env("SRC_PATH")
 UPDATE_INTERVAL = get_optional_int_env("UPDATE_INTERVAL", 24*3600)
+RATING_THRESHOLD = get_optional_int_env("RATING_THRESHOLD", 60)
 
 parser = argparse.ArgumentParser(description="Stash Backup Helper")
 parser.add_argument('--sync', default=None, help='Sync destination')
@@ -59,7 +60,7 @@ while True:
     data = response.json()
     for scene in data["data"]["allScenes"]:
         rating = scene.get("rating100")
-        if rating is not None and rating > 60:
+        if rating is not None and rating > RATING_THRESHOLD:
             file_paths = [f["path"] for f in scene.get("files", [])]
             for f in file_paths:
                 symlink_path = os.path.join(SYMLINK_DIR , str(scene['id']).zfill(9) + "_" + os.path.basename(f))
