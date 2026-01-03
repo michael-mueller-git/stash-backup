@@ -76,7 +76,7 @@ while True:
     os.system(f"du -sh -L \"{SYMLINK_DIR}\"")
 
     if args.sync:
-        os.system(f"rsync -avL --size-only --stats --delete \"{SYMLINK_DIR}/\" \"{args.sync}/\"")
+        os.system(f"rsync -avL --no-o --no-g --no-perms --size-only --stats --delete \"{SYMLINK_DIR}/\" \"{args.sync}/\"")
 
     print("sleep", UPDATE_INTERVAL, "seconds")
     time.sleep(UPDATE_INTERVAL)
