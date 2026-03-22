@@ -63,6 +63,9 @@ while True:
         if rating is not None and rating > RATING_THRESHOLD:
             file_paths = [f["path"] for f in scene.get("files", [])]
             for f in file_paths:
+                if SYMLINK_DIR in f:
+                    print("Skip Symlink dir in", f)
+                    continue
                 symlink_path = os.path.join(SYMLINK_DIR , str(scene['id']).zfill(9) + "_" + os.path.basename(f))
                 relative_path = os.path.relpath(f, SRC_DIR)
                 relative_path = os.path.join("..", relative_path)
