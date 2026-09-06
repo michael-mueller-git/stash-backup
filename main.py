@@ -33,6 +33,27 @@ args = parser.parse_args()
 
 os.makedirs(SYMLINK_DIR , exist_ok=True)
 
+def dir_non_empty(path: str) -> bool:
+    with os.scandir(path) as it:
+        return next(it, None) is not None
+
+def check_sync_valid() -> str:
+    if not os.path.isdir(args.sync):
+        return f"sync destination unavailable: {args.sync}"
+    if not dir_non_empty(args.sync):
+        return f"sync destination empty: {args.sync}"
+    if not dir_non_empty(SYMLINK_DIR):
+        return f"source dir empty/invalid: {SYMLINK_DIR}"
+    return ""
+
+def run_sync():
+    rsync = [
+        "rsync", "-avL", "--no-o", "--no-g", "--no-perms",
+        "--size-only", "--stats", "--delete",
+        os.path.join(SYMLINK_DIR, ""), os.path.join(args.sync, ""),
+    ]
+    os.system(" ".join(f'"{a}"' for a in rsync))
+
 query = """
 query {
   allScenes {
@@ -79,7 +100,11 @@ while True:
     os.system(f"du -sh -L \"{SYMLINK_DIR}\"")
 
     if args.sync:
-        os.system(f"rsync -avL --no-o --no-g --no-perms --size-only --stats --delete \"{SYMLINK_DIR}/\" \"{args.sync}/\"")
+        reason = check_sync_valid()
+        if reason:
+            print("ERROR: skipping sync:", reason)
+        else:
+            run_sync()
 
     print("sleep", UPDATE_INTERVAL, "seconds")
     time.sleep(UPDATE_INTERVAL)
